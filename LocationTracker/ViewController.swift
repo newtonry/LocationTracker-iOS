@@ -8,71 +8,88 @@
 
 import UIKit
 import CoreLocation
+import UIKit
+
 
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
+
     let locationManager = CLLocationManager()
-    
+
+    @IBOutlet weak var actionLabel: UILabel!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        
+        actionLabel.alpha = 0
         self.setupLocationManager()
-        
     }
     @IBAction func displayCoordinates(sender: UIButton) {
-        println("Your Location")
-        println(getCurrentLocationAsString())
+        print("Your Location")
+        print(getCurrentLocationAsString())
+        sendLocationData()
     }
     
     func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestAlwaysAuthorization()
-        locationManager.distanceFilter = 30
+        locationManager.distanceFilter = 10
         locationManager.startUpdatingLocation()
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if UIApplication.sharedApplication().applicationState == UIApplicationState.Active {
-            //            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            println(getCurrentLocationAsString())
+            print(getCurrentLocationAsString())
         }
             
         else if UIApplication.sharedApplication().applicationState == UIApplicationState.Background {
-            //            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
             NSLog("App is backgrounded. New location is %@", getCurrentLocationAsString())
         }
         
-        
         sendLocationData()
-        
     }
     
     func getCurrentLocationAsString() -> String {
         if let location = locationManager.location {
             return "\(location.coordinate.latitude),\(location.coordinate.longitude)"
         } else {
-            return "No real location manager"
-            
+            return ""
         }
     }
     
+    func hasRealLocation() -> Bool {
+        return !(locationManager.location == nil)
+    }
+    
     func sendLocationData() {
-        //        var locationCoordinates = PFObject(className:"LocationCoordinates")
-        //        locationCoordinates["location"] = getCurrentLocationAsString()
-        //
-        //        locationCoordinates.saveInBackgroundWithBlock {
-        //            (success: Bool, error: NSError?) -> Void in
-        //            if (success) {
-        //                println("saved")
-        //            } else {
-        //                println("error")
-        //            }
-        //        
-        //        }
+        let locationCoordinates = LocationCoordinates()
+        locationCoordinates.location = getCurrentLocationAsString()
+
+        locationCoordinates.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                self.showLocationSavedLabel()
+                print("saved")
+            } else {
+                print("error")
+            }
+        }
+    }
+    
+    func showLocationSavedLabel() -> Void {
+        // This is really just here to visually display that something is happening
+        UIView.animateWithDuration(0.5) {
+            self.actionLabel.alpha = 1
+            NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "hideLocationSavedLabel", userInfo: nil, repeats: false)
+        }
+    }
+    
+    func hideLocationSavedLabel() -> Void {
+        UIView.animateWithDuration(0.5) {
+            self.actionLabel.alpha = 0
+            
+        }
         
     }
     

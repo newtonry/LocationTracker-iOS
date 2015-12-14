@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+
+        setupParse()
+        
         return true
     }
 
@@ -42,5 +45,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+    func setupParse() {
+        // Parse.enableLocalDatastore()
+        Parse.setApplicationId(PARSE_APPLICATION_KEY,
+            clientKey: PARSE_CLIENT_KEY)
+        PFUser.enableAutomaticUser()
+        // If you would like all objects to be private by default, remove this line.
+//        var defaultACL = PFACL()
+//        defaultACL.setPublicReadAccess(true)
+//        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+    }
+    
+    
+    
 }
 
