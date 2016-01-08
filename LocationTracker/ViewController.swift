@@ -22,19 +22,55 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionLabel.alpha = 0
+        startSendingLocation()
+        
         self.setupLocationManager()
+        
+        
     }
-    @IBAction func displayCoordinates(sender: UIButton) {
-        print("Your Location")
-        print(getCurrentLocationAsString())
+    
+    func startSendingLocation() {
+        NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "powerUpAndSendLocation", userInfo: nil, repeats: true)
+        
+    }
+    
+    func powerUpAndSendLocation() {
+        powerUpLocationManager()
         sendLocationData()
+        powerDownLocationManager()
+    }
+    
+    func powerUpLocationManager() {
+        // Get the most accurate data
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.distanceFilter = kCLDistanceFilterNone
+    }
+    
+    func powerDownLocationManager() {
+        // Conserve battery
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        locationManager.distanceFilter = 10000000
+    }
+    
+    func sendLocationData() {
+        let locationCoordinates = LocationCoordinates()
+        locationCoordinates.location = getCurrentLocationAsString()
+        
+        locationCoordinates.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                self.showLocationSavedLabel()
+                print("saved")
+            } else {
+                print("error")
+            }
+        }
     }
     
     func setupLocationManager() {
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestAlwaysAuthorization()
-        locationManager.distanceFilter = 10
+        powerUpLocationManager()
         locationManager.startUpdatingLocation()
     }
     
@@ -60,21 +96,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func hasRealLocation() -> Bool {
         return !(locationManager.location == nil)
-    }
-    
-    func sendLocationData() {
-        let locationCoordinates = LocationCoordinates()
-        locationCoordinates.location = getCurrentLocationAsString()
-
-        locationCoordinates.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if (success) {
-                self.showLocationSavedLabel()
-                print("saved")
-            } else {
-                print("error")
-            }
-        }
     }
     
     func showLocationSavedLabel() -> Void {
