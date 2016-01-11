@@ -11,6 +11,7 @@ import Foundation
 
 class LocationCoordinates : PFObject, PFSubclassing {
     @NSManaged var location: String?
+    @NSManaged var timeVisited: NSDate?
     
     override class func initialize() {
         struct Static {
