@@ -23,15 +23,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         actionLabel.alpha = 0
         startSendingLocation()
-        
         self.setupLocationManager()
-        
-        
     }
+
+    @IBAction func displayCoordinates(sender: UIButton) {
+        powerUpAndSendLocation()
+        
+     }
     
     func startSendingLocation() {
-        NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "powerUpAndSendLocation", userInfo: nil, repeats: true)
-        
+        NSTimer.scheduledTimerWithTimeInterval(300.0, target: self, selector: "powerUpAndSendLocation", userInfo: nil, repeats: true)
     }
     
     func powerUpAndSendLocation() {
@@ -83,7 +84,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             NSLog("App is backgrounded. New location is %@", getCurrentLocationAsString())
         }
         
-        sendLocationData()
+//        sendLocationData()
     }
     
     func getCurrentLocationAsString() -> String {
