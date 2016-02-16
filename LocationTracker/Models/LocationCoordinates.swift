@@ -11,7 +11,9 @@ import Foundation
 
 class LocationCoordinates : PFObject, PFSubclassing {
     @NSManaged var location: String?
+    @NSManaged var username: String?
     @NSManaged var timeVisited: NSDate?
+    @NSManaged var horizontalAccuracy: NSNumber?
     
     override class func initialize() {
         struct Static {
@@ -20,6 +22,15 @@ class LocationCoordinates : PFObject, PFSubclassing {
         dispatch_once(&Static.onceToken) {
             self.registerSubclass()
         }
+    }
+    
+    static func fromCLLocation(location: CLLocation) -> LocationCoordinates {
+        let locationCoordinates = LocationCoordinates();
+        locationCoordinates.username = "Ryan-iOS"  // Just defaulting to this for now
+        locationCoordinates.location = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
+        locationCoordinates.timeVisited = NSDate()
+        locationCoordinates.horizontalAccuracy = location.horizontalAccuracy
+        return locationCoordinates
     }
 
     static func parseClassName() -> String {

@@ -22,7 +22,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        actionLabel.alpha = 0
         startSendingLocation()
         self.setupLocationManager()
     }
@@ -59,10 +58,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func recordLocation() {
         // Adds the location to the list of unsaved locations
-        let locationCoordinates = LocationCoordinates()
-        locationCoordinates.location = getCurrentLocationAsString()
-        locationCoordinates.timeVisited = NSDate()
-        unsavedLocations.append(locationCoordinates)
+        if let location = locationManager.location {
+            let locationCoordinates = LocationCoordinates.fromCLLocation(location)
+            unsavedLocations.append(locationCoordinates)
+        } else {
+            print("There currently is no location")
+        }
     }
     
     func sendLocationData() {
