@@ -25,6 +25,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         startSendingLocation()
         self.setupLocationManager()
     }
+    
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        powerUpLocationManager()
+        locationManager.startUpdatingLocation()
+        locationManager.startMonitoringVisits()
+    }
 
     @IBAction func displayCoordinates(sender: UIButton) {
         powerUpAndSendLocation()
@@ -43,6 +51,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         sendLocationData()
         powerDownLocationManager()
     }
+    
     
     func powerUpLocationManager() {
         // Get the most accurate data
@@ -90,11 +99,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         print("There are now \(unsavedLocations.count) unsaved locations")
     }
     
-    func setupLocationManager() {
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        powerUpLocationManager()
-        locationManager.startUpdatingLocation()
+    func locationManager(manager: CLLocationManager, didVisit clVisit: CLVisit) {
+        let visit = Visit.fromCLVisit(clVisit)
+        visit.saveInBackground()
+        print("didVisit event received")
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

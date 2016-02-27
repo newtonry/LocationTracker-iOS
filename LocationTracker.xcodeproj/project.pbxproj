@@ -15,6 +15,7 @@
 		C55F1D7C1C1BDB2000E024C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C55F1D7B1C1BDB2000E024C1 /* Images.xcassets */; };
 		C55F1D7F1C1BDB2000E024C1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55F1D7D1C1BDB2000E024C1 /* LaunchScreen.xib */; };
 		C55F1D8B1C1BDB2000E024C1 /* LocationTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55F1D8A1C1BDB2000E024C1 /* LocationTrackerTests.swift */; };
+		C5A1A44C1C824DC5006959C9 /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1A44B1C824DC5006959C9 /* Visit.swift */; };
 		C5CD08171C1E5342001D23DF /* keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CD08161C1E5342001D23DF /* keys.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		C55F1D841C1BDB2000E024C1 /* LocationTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocationTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C55F1D891C1BDB2000E024C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C55F1D8A1C1BDB2000E024C1 /* LocationTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTrackerTests.swift; sourceTree = "<group>"; };
+		C5A1A44B1C824DC5006959C9 /* Visit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Visit.swift; path = Models/Visit.swift; sourceTree = "<group>"; };
 		C5CB83D31C1BEF4D00F09E0D /* LocationTracker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocationTracker-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		C5CD08161C1E5342001D23DF /* keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = keys.swift; sourceTree = "<group>"; };
 		D180A292252A173EC10F7770 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				C55E84221C1CA43A00769D2D /* LocationCoordinates.swift */,
+				C5A1A44B1C824DC5006959C9 /* Visit.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				C55F1D771C1BDB2000E024C1 /* ViewController.swift in Sources */,
 				C5CD08171C1E5342001D23DF /* keys.swift in Sources */,
 				C55F1D751C1BDB2000E024C1 /* AppDelegate.swift in Sources */,
+				C5A1A44C1C824DC5006959C9 /* Visit.swift in Sources */,
 				C55E84231C1CA43A00769D2D /* LocationCoordinates.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
